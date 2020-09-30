@@ -1,8 +1,8 @@
 import { all } from 'redux-saga/effects'
-// import { actionWatcher as ZivaBooksWatcher } from './ZivabooksSaga'
+import { actionWatcher as TruecallerSaga } from './TruecallerSaga'
 
 export default function* rootSaga() {
     yield all([
-        // ZivaBooksWatcher()
+        TruecallerSaga()
     ]);
 }
