@@ -85,9 +85,10 @@ class SingleBlog extends React.Component {
             <MainLayout>
                 <SRow className="100-vh mx-2 my-3">
                     <BackTop />
-                    <SCol span={18}>
+                    <SCol xs={24} md={18}>
                         <SRow>
-                            <SCol span={16} offset={5}>
+                            <SCol xs={0} md={4}></SCol>
+                            <SCol xs={24} md={16}>
                                 {
                                     this.props.state.TruecallerReducer.singlePostLoading ?
                                         <SCard className="mb-3 shadow-sm">
@@ -120,78 +121,84 @@ class SingleBlog extends React.Component {
                                             </SCard>
                                 }
                             </SCol>
+                            <SCol xs={0} md={4}></SCol>
                         </SRow>
                     </SCol>
-                    <SCol span={6}>
-                        <h4 className="text-secondary">POPULAR POST:</h4>
-                        <SList bordered className="mb-3">
-                            {
-                                this.props.state.TruecallerReducer.popularPosts.map((post) =>
-                                    !post.fields.title && !this.props.state.TruecallerReducer.postNameLoading ? this.handlePostName(post)
-                                        :
-                                        <SListItem key={post.fields.post_id} onClick={() => this.handlePopularPostClick(post.fields.post_id)}>
-                                            <SListItemMeta
-                                                avatar={<SAvatar src={!post.fields.post_thumbnail ? "/placeholder-640x480.jpg" : post.fields.post_thumbnail.URL} />}
-                                                title={post.fields.title}
-                                            />
+                    <SCol md={6} xs={24}>
+                        <SCol span={24}>
+
+                            <h4 className="text-secondary">POPULAR POST:</h4>
+                            <SList bordered className="mb-3">
+                                {
+                                    this.props.state.TruecallerReducer.popularPosts.map((post) =>
+                                        !post.fields.title && !this.props.state.TruecallerReducer.postNameLoading ? this.handlePostName(post)
+                                            :
+                                            <SListItem key={post.fields.post_id} onClick={() => this.handlePopularPostClick(post.fields.post_id)}>
+                                                <SListItemMeta
+                                                    avatar={<SAvatar src={!post.fields.post_thumbnail ? "/placeholder-640x480.jpg" : post.fields.post_thumbnail.URL} />}
+                                                    title={post.fields.title}
+                                                />
+                                            </SListItem>
+                                    )
+                                }
+                            </SList>
+                        </SCol>
+                        <SCol xs={0} md={24}>
+                            <h4 className="text-secondary">CATEGORIES:</h4>
+                            <SList bordered className="mb-3">
+                                {
+                                    this.props.state.TruecallerReducer.categoryLoading ?
+                                        <SListItem>
+                                            <Skeleton active title />
                                         </SListItem>
-                                )
-                            }
-                        </SList>
-                        <h4 className="text-secondary">CATEGORIES:</h4>
-                        <SList bordered className="mb-3">
-                            {
-                                this.props.state.TruecallerReducer.categoryLoading ?
-                                    <SListItem>
-                                        <Skeleton active title />
-                                    </SListItem>
-                                    :
-                                    this.props.state.TruecallerReducer.categoriesError ?
-                                        <div className="w-100 mb-3 bg-light d-flex" style={{ height: '120px' }}>
-                                            <ReloadOutlined className="align-self-center mx-auto" onClick={() => this.props.callCategories()} />
-                                        </div>
                                         :
-                                        this.props.state.TruecallerReducer.categories.map((category) =>
-                                            <SListItem key={'side'+category.slug} onClick={() => this.handleFirstPost({ category: category.slug })}>
-                                                <SRow className="w-100">
-                                                    <SCol span={23}>
-                                                        <span>{category.name}</span>
-                                                    </SCol>
-                                                    <SCol span={1}>
-                                                        <SBadge className="float-right" count={category.post_count} />
-                                                    </SCol>
-                                                </SRow>
-                                            </SListItem>
-                                        )
-                            }
-                        </SList>
-                        <h4 className="text-secondary">POPULAR TAGS:</h4>
-                        <SList bordered className="mb-3">
-                            {
-                                this.props.state.TruecallerReducer.tagLoading ?
-                                    <SListItem>
-                                        <Skeleton active title />
-                                    </SListItem>
-                                    :
-                                    this.props.state.TruecallerReducer.tagsError ?
-                                        <div className="w-100 mb-3 bg-light d-flex" style={{ height: '120px' }}>
-                                            <ReloadOutlined className="align-self-center mx-auto" onClick={() => this.props.callTags()} />
-                                        </div>
+                                        this.props.state.TruecallerReducer.categoriesError ?
+                                            <div className="w-100 mb-3 bg-light d-flex" style={{ height: '120px' }}>
+                                                <ReloadOutlined className="align-self-center mx-auto" onClick={() => this.props.callCategories()} />
+                                            </div>
+                                            :
+                                            this.props.state.TruecallerReducer.categories.map((category) =>
+                                                <SListItem key={'side' + category.slug} onClick={() => this.handleFirstPost({ category: category.slug })}>
+                                                    <SRow className="w-100">
+                                                        <SCol span={23}>
+                                                            <span>{category.name}</span>
+                                                        </SCol>
+                                                        <SCol span={1}>
+                                                            <SBadge className="float-right" count={category.post_count} />
+                                                        </SCol>
+                                                    </SRow>
+                                                </SListItem>
+                                            )
+                                }
+                            </SList>
+                            <h4 className="text-secondary">POPULAR TAGS:</h4>
+                            <SList bordered className="mb-3">
+                                {
+                                    this.props.state.TruecallerReducer.tagLoading ?
+                                        <SListItem>
+                                            <Skeleton active title />
+                                        </SListItem>
                                         :
-                                        this.props.state.TruecallerReducer.tags.map((tag) =>
-                                            <SListItem key={'side'+tag.slug} onClick={() => this.handleFirstPost({ tag: tag.slug })}>
-                                                <SRow className="w-100">
-                                                    <SCol span={23}>
-                                                        <span>{tag.name}</span>
-                                                    </SCol>
-                                                    <SCol span={1}>
-                                                        <SBadge className="float-right" count={tag.post_count} />
-                                                    </SCol>
-                                                </SRow>
-                                            </SListItem>
-                                        )
-                            }
-                        </SList>
+                                        this.props.state.TruecallerReducer.tagsError ?
+                                            <div className="w-100 mb-3 bg-light d-flex" style={{ height: '120px' }}>
+                                                <ReloadOutlined className="align-self-center mx-auto" onClick={() => this.props.callTags()} />
+                                            </div>
+                                            :
+                                            this.props.state.TruecallerReducer.tags.map((tag) =>
+                                                <SListItem key={'side' + tag.slug} onClick={() => this.handleFirstPost({ tag: tag.slug })}>
+                                                    <SRow className="w-100">
+                                                        <SCol span={23}>
+                                                            <span>{tag.name}</span>
+                                                        </SCol>
+                                                        <SCol span={1}>
+                                                            <SBadge className="float-right" count={tag.post_count} />
+                                                        </SCol>
+                                                    </SRow>
+                                                </SListItem>
+                                            )
+                                }
+                            </SList>
+                        </SCol>
                     </SCol>
                 </SRow>
             </MainLayout>

@@ -72,6 +72,14 @@ class LandingPage extends React.Component {
                     {moment().diff(moment(post.date), 'days') > 6 ? moment(post.date).format('ll') : moment(post.date).fromNow()}
                 </span>
                 <br /><br />
+                <SCol xs={24} md={0}>
+                    {
+                        Object.keys(post.categories).map((tag) =>
+                            <STag key={'side' + tag} color="blue" onClick={() => this.handleFirstPost({ category: post.categories[tag].slug })}>{tag}</STag>
+                        )
+                    }
+                </SCol>
+                <br />
                 {
                     Object.keys(post.tags).map((tag) => <span key={tag} className="custom-tag m-1" onClick={() => this.handleFirstPost({ tag: post.tags[tag].slug })}>{tag}</span>)
                 }
@@ -99,12 +107,13 @@ class LandingPage extends React.Component {
 
     render() {
         return (
-            <MainLayout setPage={this.setPage}>
-                <SRow className="100-vh mx-2 my-3">
+            <MainLayout setPage={this.setPage} >
+                <SRow className="vh-100 mx-2 my-3">
                     <BackTop />
-                    <SCol span={18}>
+                    <SCol xs={24} md={18}>
                         <SRow>
-                            <SCol span={16} offset={5}>
+                            <SCol xs={0} md={4}></SCol>
+                            <SCol xs={24} md={16}>
                                 {
                                     this.props.state.TruecallerReducer.postLoading ?
                                         <SCard className="mb-3 shadow-sm">
@@ -122,7 +131,7 @@ class LandingPage extends React.Component {
                                                 this.props.state.TruecallerReducer.allPosts.map((post, index) =>
                                                     (this.state.page * 25) - 25 <= index && index < this.state.page * 25 ?
                                                         <SCard
-                                                        key={post.ID}
+                                                            key={post.ID}
                                                             cover={
                                                                 <img
                                                                     alt="example"
@@ -134,11 +143,13 @@ class LandingPage extends React.Component {
                                                                 <SButton onClick={() => this.props.history.push("/solo/" + post.ID)} className="float-right mr-3">Continue Reading →</SButton>
                                                             ]}
                                                         >
-                                                            {
-                                                                Object.keys(post.categories).map((tag) =>
-                                                                    <STag key={'post'+tag} color="blue" className="float-right" onClick={() => this.handleFirstPost({ category: post.categories[tag].slug })}>{tag}</STag>
-                                                                )
-                                                            }
+                                                            <SCol xs={0} md={24}>
+                                                                {
+                                                                    Object.keys(post.categories).map((tag) =>
+                                                                        <STag key={'post' + tag} color="blue" className="float-right" onClick={() => this.handleFirstPost({ category: post.categories[tag].slug })}>{tag}</STag>
+                                                                    )
+                                                                }
+                                                            </SCol>
                                                             <SMeta
                                                                 avatar={<SAvatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{!post.author ? "" : post.author.name.slice(0, 1)}</SAvatar>}
                                                                 title={post.title}
@@ -151,9 +162,10 @@ class LandingPage extends React.Component {
                                 <SButton onClick={() => this.handleClick(this.state.page === 1 ? 1 : this.state.page - 1)} disabled={this.state.page === 1}>{'< PREVIOUS'}</SButton>
                                 <SButton className="float-right" onClick={() => this.handleClick(this.state.page === this.props.state.TruecallerReducer.totalPost % 25 ? this.props.state.TruecallerReducer.totalPost % 25 : this.state.page + 1)} disabled={this.state.page === this.props.state.TruecallerReducer.totalPost % 25}>{'NEXT >'}</SButton>
                             </SCol>
+                            <SCol xs={0} md={4}></SCol>
                         </SRow>
                     </SCol>
-                    <SCol span={6}>
+                    <SCol xs={0} md={6}>
                         <h4 className="text-secondary">CATEGORIES:</h4>
                         <SList bordered className="mb-3">
                             {
@@ -168,7 +180,7 @@ class LandingPage extends React.Component {
                                         </div>
                                         :
                                         this.props.state.TruecallerReducer.categories.map((category) =>
-                                            <SListItem key={'side'+category.slug} onClick={() => this.handleFirstPost({ category: category.slug })}>
+                                            <SListItem key={'side' + category.slug} onClick={() => this.handleFirstPost({ category: category.slug })}>
                                                 <SRow className="w-100">
                                                     <SCol span={23}>
                                                         <span>{category.name}</span>
@@ -195,7 +207,7 @@ class LandingPage extends React.Component {
                                         </div>
                                         :
                                         this.props.state.TruecallerReducer.tags.map((tag) =>
-                                            <SListItem key={'side'+tag.slug} onClick={() => this.handleFirstPost({ tag: tag.slug })}>
+                                            <SListItem key={'side' + tag.slug} onClick={() => this.handleFirstPost({ tag: tag.slug })}>
                                                 <SRow className="w-100">
                                                     <SCol span={23}>
                                                         <span>{tag.name}</span>

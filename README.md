@@ -37,5 +37,7 @@ exports.handler = (event, context, cb) => {
 };
 ```
 
+To navigate Home page click on Truecaller logo.
+
 Due to the time concern, I'm not able to write test scripts for this assessment and didn't test every edge case.
 Hope this assessment will reflect my skills.
