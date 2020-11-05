@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
 
-// import ZivabooksReducer from './ZivabooksReducer';
-// import ContainerReducer from './ContainerReducer';
+import TruecallerReducer from './TruecallerReducer';
 
 const rootReducer = combineReducers({
-    // ZivabooksReducer,
-    // ContainerReducer
+    TruecallerReducer
 });
 
 export default rootReducer;

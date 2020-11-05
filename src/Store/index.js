@@ -12,23 +12,34 @@ import rootSaga from '../Saga';
 const LOCAL_STORAGE_NAME = "Truecaller"
 
 const persistConfig = {
-    key: LOCAL_STORAGE_NAME,
-    storage: storage,
-    stateReconciler: hardSet,
+  key: LOCAL_STORAGE_NAME,
+  storage: storage,
+  stateReconciler: hardSet,
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-  persistedReducer,
-  applyMiddleware(
-    sagaMiddleware,
-    createLogger(),
-  ),
-);
+let store;
 
+if (process.env.NODE_ENV === 'production') {
+  store = createStore(
+    persistedReducer,
+    applyMiddleware(
+      sagaMiddleware,
+    ),
+  );
+}
+else {
+  store = createStore(
+    persistedReducer,
+    applyMiddleware(
+      sagaMiddleware,
+      createLogger(),
+    ),
+  );
+}
 const persistor = persistStore(store)
 persistor.persist()
 sagaMiddleware.run(rootSaga);

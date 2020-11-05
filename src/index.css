@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.anticon{
+  vertical-align: 0.125em !important;
+}
+
+img{
+  width: 100%;
+}
